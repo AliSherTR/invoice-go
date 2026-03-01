@@ -124,3 +124,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+.invoice__input {
+  @apply h-12 dark:bg-[hsl(233,31%,17%)] bg-gray-100  dark:border-[hsl(233,30%,21%)] shadow-lg 
+}
+
+.invoice__label {
+  @apply text-xs font-light
+}
+
+.invoice__button {
+  @apply h-12 rounded-full dark:text-white
+}

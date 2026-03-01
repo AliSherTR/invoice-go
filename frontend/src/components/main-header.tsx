@@ -9,6 +9,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, Plus } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
+import InvoiceForm from "@/features/invoices/components/invoice-form";
+import { ScrollArea } from "./ui/scroll-area";
 
 const statuses = ["Draft", "Pending", "Paid"];
 
@@ -26,7 +35,9 @@ export default function MainHeader() {
   return (
     <div className="flex justify-between items-center">
       <div>
-        <h1 className="text-3xl font-bold font-sans">Invoices</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
+          Invoices
+        </h1>
         <span className="text-sm mt-2">No Invoices</span>
       </div>
       <div className="flex items-center gap-4">
@@ -57,12 +68,28 @@ export default function MainHeader() {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button className=" rounded-full h-14 bg-[#7C5DFA] hover:bg-[#9277FF] text-white">
-          <div className=" h-8 w-8 rounded-full bg-white flex items-center justify-center">
-            <Plus color="blue" strokeWidth={4} />
-          </div>
-          <span>New Invoice</span>
-        </Button>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button className=" px-1.5 pe-3 rounded-full h-12 bg-[#7C5DFA] hover:bg-[#9277FF] text-white">
+              <div className=" h-8 w-8 rounded-full bg-white flex items-center justify-center">
+                <Plus color="blue" strokeWidth={4} />
+              </div>
+              <span>New Invoice</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent
+            side="left"
+            className=" dark:bg-[hsl(231,30%,11%)] sm:max-w-xl overflow-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] "
+          >
+            <SheetHeader>
+              <SheetTitle>New Invoice</SheetTitle>
+            </SheetHeader>
+            <ScrollArea className=" h-screen px-5">
+              <InvoiceForm />
+            </ScrollArea>
+          </SheetContent>
+        </Sheet>
       </div>
     </div>
   );

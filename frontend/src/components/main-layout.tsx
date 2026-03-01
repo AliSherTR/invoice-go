@@ -14,10 +14,10 @@ export default function MainLayout({
       enableSystem
       disableTransitionOnChange
     >
-      <div className=" flex min-h-screen dark:bg-[#141625] ">
+      <div className=" flex h-screen dark:bg-[#141625] ">
         <Sidebar />
-        <main className=" flex-1 bg-white dark:bg-[#141625] ">
-          <div className=" max-w-3xl mx-auto mt-30 flex-1">{children}</div>
+        <main className=" flex-1 bg-white dark:bg-[#141625] overflow-y-auto ">
+          <div className=" max-w-3xl mx-auto mt-15 flex-1">{children}</div>
         </main>
       </div>
     </ThemeProvider>
