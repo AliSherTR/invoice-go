@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"invoice-backend/config"
 
@@ -41,9 +42,9 @@ func Connect() {
 		log.Fatal("❌ Failed to get database instance:", err)
 	}
 
-	sqlDB.SetMaxOpenConns(25)   // max simultaneous connections
-	sqlDB.SetMaxIdleConns(10)   // keep 10 connections ready in the pool
-	sqlDB.SetConnMaxLifetime(0) // connections live forever until closed
+	sqlDB.SetMaxOpenConns(25)                 // max simultaneous connections
+	sqlDB.SetMaxIdleConns(10)                 // keep 10 connections ready in the pool
+	sqlDB.SetConnMaxLifetime(5 * time.Minute) // recycle connections before infrastructure timeouts
 
 	DB = db
 	log.Println("✅ Database connected successfully")

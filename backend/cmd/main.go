@@ -33,5 +33,9 @@ func main() {
 
 	// 6. Start server
 	log.Printf("🚀 Server running on port %s", config.App.AppPort)
-	app.Run(":" + config.App.AppPort)
+	// 6. Start server
+	log.Printf("🚀 Server running on port %s", config.App.AppPort)
+	if err := app.Run(":" + config.App.AppPort); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
+	}
 }

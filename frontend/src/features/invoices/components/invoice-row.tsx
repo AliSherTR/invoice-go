@@ -27,8 +27,16 @@ export default function InvoiceRow({
 
   return (
     <div
-      className="flex items-center p-6 rounded-lg border border-transparent hover:border shadow-sm hover:border-blue-300 transition-all ease-in-out duration-150 text-sm dark:bg-[hsl(233,31%,17%)] gap-4 cursor-pointer"
+      className="flex items-center p-6 rounded-lg border border-transparent hover:border shadow-sm hover:border-blue-300 focus-visible:border focus-visible:border-blue-300 focus-visible:outline-none transition-all ease-in-out duration-150 text-sm dark:bg-[hsl(233,31%,17%)] gap-4 cursor-pointer"
+      role="link"
+      tabIndex={0}
       onClick={() => router.push(`/invoices/${invoiceNumber}`)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          router.push(`/invoices/${invoiceNumber}`);
+        }
+      }}
     >
       {/* Invoice Number - fixed width */}
       <div className="flex items-center gap-1 w-24 shrink-0">

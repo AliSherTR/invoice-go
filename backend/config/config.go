@@ -34,7 +34,10 @@ func Load() {
 		}
 	}
 
-	expiryDays, _ := strconv.Atoi(os.Getenv("JWT_EXPIRY_DAYS"))
+	expiryDays, err := strconv.Atoi(os.Getenv("JWT_EXPIRY_DAYS"))
+	if err != nil || expiryDays <= 0 {
+		expiryDays = 7
+	}
 
 	App = Config{
 		AppEnv:  getEnv("APP_ENV", "development"),
@@ -43,12 +46,16 @@ func Load() {
 		DBHost:     getEnv("DB_HOST", "localhost"),
 		DBPort:     getEnv("DB_PORT", "5432"),
 		DBUser:     getEnv("DB_USER", "postgres"),
+		DBSSLMode:  getEnv("DB_SSLMODE", "require"),
 		DBPassword: getEnv("DB_PASSWORD", ""),
 		DBName:     getEnv("DB_NAME", "invoice_db"),
-		DBSSLMode:  getEnv("DB_SSLMODE", "disable"),
 
 		JWTSecret:     getEnv("JWT_SECRET", ""),
 		JWTExpiryDays: expiryDays,
+	}
+
+	if App.AppEnv == "production" && App.JWTSecret == "" {
+		log.Fatal("JWT_SECRET must be set in production")
 	}
 }
 
