@@ -1,5 +1,7 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { ChevronRight, Hash, PoundSterling } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   invoiceNumber: string;
@@ -16,6 +18,7 @@ export default function InvoiceRow({
   amount,
   status,
 }: Props) {
+  const router = useRouter();
   function getStatusColor(status: string) {
     if (status === "PAID") return "bg-green-100";
     if (status === "PENDING") return "bg-yellow-200";
@@ -23,7 +26,10 @@ export default function InvoiceRow({
   }
 
   return (
-    <div className="flex items-center p-6 rounded-lg border border-transparent hover:border shadow-sm hover:border-blue-300 transition-all ease-in-out duration-150 text-sm dark:bg-[hsl(233,31%,17%)] gap-4">
+    <div
+      className="flex items-center p-6 rounded-lg border border-transparent hover:border shadow-sm hover:border-blue-300 transition-all ease-in-out duration-150 text-sm dark:bg-[hsl(233,31%,17%)] gap-4 cursor-pointer"
+      onClick={() => router.push(`/invoices/${invoiceNumber}`)}
+    >
       {/* Invoice Number - fixed width */}
       <div className="flex items-center gap-1 w-24 shrink-0">
         <span className="text-gray-500">

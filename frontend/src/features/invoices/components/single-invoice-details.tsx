@@ -104,7 +104,7 @@ export default function SingleInvoiceDetails() {
           </span>
         </div>
 
-        <div className=" py-8 rounded-lg px-8 bg-black flex items-center justify-between">
+        <div className=" py-8 rounded-lg px-8 bg-black flex items-center justify-between text-white">
           <span className=" text-xs font-light">Amount Due</span>
 
           <span className=" text-2xl font-bold">£ 925.00</span>
