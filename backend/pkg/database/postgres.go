@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"invoice-backend/config"
+	"invoice-backend/internal/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -29,4 +30,13 @@ func Connect() {
 
 	DB = db
 	log.Println("✅ Database connected successfully")
+}
+
+func Migrate() {
+	if err := DB.AutoMigrate(
+		&models.User{},
+	); err != nil {
+		log.Fatal("Migration failed: ", err)
+	}
+	log.Println("✅ Migration completed successfully")
 }

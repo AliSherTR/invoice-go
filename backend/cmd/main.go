@@ -1,7 +1,9 @@
 package main
 
 import (
+	"invoice-backend/config"
 	"invoice-backend/internal/health"
+	"invoice-backend/pkg/database"
 	"log"
 
 	"github.com/gin-contrib/cors"
@@ -18,6 +20,10 @@ func main() {
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 	}))
+
+	config.Load()
+	database.Connect()
+	database.Migrate()
 
 	v1 := app.Group("/api/v1")
 	{
