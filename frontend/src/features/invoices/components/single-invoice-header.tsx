@@ -48,9 +48,16 @@ export default function SingleInvoiceHeader({ status }: Props) {
           </div>
         </div>
 
-        <Button variant={"destructive"} className=" h-12 w-22 rounded-full">
-          Delete
-        </Button>
+        <div className="flex gap-3">
+          {status !== "PAID" && (
+            <Button className=" h-12 rounded-full bg-blue-600 hover:bg-blue-700">
+              Mark as Paid
+            </Button>
+          )}
+          <Button variant={"destructive"} className=" h-12 w-22 rounded-full">
+            Delete
+          </Button>
+        </div>
       </div>
     </div>
   );

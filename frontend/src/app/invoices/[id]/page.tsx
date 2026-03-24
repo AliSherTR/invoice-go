@@ -4,7 +4,7 @@ import SingleInvoiceHeader from "@/features/invoices/components/single-invoice-h
 export default function page() {
   return (
     <div className=" space-y-3">
-      <SingleInvoiceHeader status="PAID" />
+      <SingleInvoiceHeader status="PENDING" />
       <SingleInvoiceDetails />
     </div>
   );

@@ -9,7 +9,7 @@ export default function AllInvoicesPage() {
         dueDate="19 Aug 2021"
         benificiary="Jensen Huang"
         amount={1800.99}
-        status="PAID"
+        status="PENDING"
       />
 
       <InvoiceRow

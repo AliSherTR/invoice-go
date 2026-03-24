@@ -20,6 +20,7 @@ import GithubIcon from "../../../../public/github.svg";
 import Image from "next/image";
 import { signupSchema, SignupValues } from "../schema";
 import Link from "next/link";
+import useAuth from "../hooks/useAuth";
 
 function getStrength(password: string): {
   score: number;
@@ -44,7 +45,7 @@ function getStrength(password: string): {
 export default function SignupForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { register, registerPending } = useAuth()
 
   const form = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
@@ -55,10 +56,15 @@ export default function SignupForm() {
   const strength = getStrength(password);
 
   const onSubmit = async (values: SignupValues) => {
-    setIsLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    console.log("Signup:", values);
-    setIsLoading(false);
+    const parsed = signupSchema.safeParse(values)
+    if (!parsed.success) {
+      form.setError("name", { message: "Invalid name" });
+      form.setError("email", { message: "Invalid email" });
+      form.setError("password", { message: "Invalid password" });
+      form.setError("confirmPassword", { message: "Invalid confirm password" });
+      return;
+    }
+    register(values)
   };
 
   return (
@@ -80,6 +86,7 @@ export default function SignupForm() {
           <div className="grid grid-cols-2 gap-3 mb-6">
             <button
               type="button"
+              disabled={registerPending}
               className="flex items-center justify-center gap-2.5 h-11 rounded-xl border border-gray-200 dark:border-[#2d3154] bg-transparent text-sm font-medium text-gray-700 dark:text-[#a8b2d8] hover:bg-gray-50 dark:hover:bg-[#1e2035] hover:border-gray-300 dark:hover:border-[#4a5180] transition-all duration-200"
             >
               <Image height={20} width={20} alt="Google" src={GoogleIcon} />
@@ -87,6 +94,7 @@ export default function SignupForm() {
             </button>
             <button
               type="button"
+              disabled={registerPending}
               className="flex items-center justify-center gap-2.5 h-11 rounded-xl border border-gray-200 dark:border-[#2d3154] bg-transparent text-sm font-medium text-gray-700 dark:text-[#a8b2d8] hover:bg-gray-50 dark:hover:bg-[#1e2035] hover:border-gray-300 dark:hover:border-[#4a5180] transition-all duration-200"
             >
               <Image height={30} width={30} alt="Github" src={GithubIcon} />
@@ -258,10 +266,10 @@ export default function SignupForm() {
 
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={registerPending}
                 className="w-full h-11 rounded-xl bg-indigo-500 dark:bg-[#7b8cde] hover:bg-indigo-600 dark:hover:bg-[#6a7bcc] text-white font-semibold tracking-wide transition-all duration-200 group mt-1"
               >
-                {isLoading ? (
+                {registerPending ? (
                   <span className="flex items-center gap-2">
                     <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                     Creating account…

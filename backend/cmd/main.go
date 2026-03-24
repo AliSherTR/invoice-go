@@ -2,7 +2,9 @@ package main
 
 import (
 	"invoice-backend/config"
+	"invoice-backend/internal/auth"
 	"invoice-backend/internal/health"
+	"invoice-backend/internal/middleware"
 	"invoice-backend/pkg/database"
 	"log"
 
@@ -28,6 +30,13 @@ func main() {
 	v1 := app.Group("/api/v1")
 	{
 		health.RegisterRoutes(v1)
+		auth.RegisterRoutes(v1)
+
+		protected := v1.Group("/")
+		protected.Use(middleware.RequireAuth())
+		{
+			auth.RegisterProtectedRoutes(protected)
+		}
 	}
 
 	log.Println("Server is running on port 8080")
